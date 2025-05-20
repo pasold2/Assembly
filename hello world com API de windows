@@ -1,0 +1,18 @@
+section .data
+    caption db 'Título',0
+    message db 'Olá, Mundo!',0
+
+section .text
+    global _start
+    extern MessageBoxA
+    extern ExitProcess
+
+_start:
+    push 0              ; MB_OK
+    push caption        ; título da caixa
+    push message        ; mensagem
+    push 0              ; HWND = NULL (janela pai)
+    call MessageBoxA
+
+    push 0              ; código de saída
+    call ExitProcess
