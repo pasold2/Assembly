@@ -1,0 +1,30 @@
+section .data
+    caption db 'Contagem',0
+    msg db 'Contagem: ',0
+    buffer db '0',0
+
+section .text
+    global _start
+    extern MessageBoxA
+    extern ExitProcess
+
+_start:
+    mov ecx, 5          ; contador
+
+.loop:
+    ; converte ecx para caractere ASCII
+    mov eax, ecx
+    add al, '0'
+    mov [buffer], al
+
+    ; mostra mensagem (não concatena, mas só o "Contagem: " para simplificar)
+    push 0
+    push caption
+    push msg
+    push 0
+    call MessageBoxA
+
+    loop .loop          ; decrementar ecx e pular se não zero
+
+    push 0
+    call ExitProcess
